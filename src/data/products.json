@@ -1,0 +1,24 @@
+[
+  {
+    "id": "w6jTz8AfInAg9cSqY5KcE",
+    "status": true,
+    "thumbnail": "",
+    "title": "Botines Adidas Predator",
+    "description": "Botines profesionales de fútbol",
+    "code": "adipred001",
+    "price": 200,
+    "stock": 20,
+    "category": "botines"
+  },
+  {
+    "id": "H1rDnl46ipOeoC4ecHAEy",
+    "status": true,
+    "thumbnail": "",
+    "title": "Camiseta Barcelona 2024",
+    "description": "Camiseta oficial de la temporada 2024 del FC Barcelona",
+    "code": "barca2024",
+    "price": 80,
+    "stock": 25,
+    "category": "camisetas"
+  }
+]
