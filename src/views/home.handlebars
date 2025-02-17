@@ -1,0 +1,13 @@
+<div class="store-container">
+  <h1 class="store-title">Tienda Deportiva</h1>
+  <h2 class="product-list-title">Lista de Productos</h2>
+  <ul class="product-list">
+    {{#each products}}
+      <li class="product-item">
+        <span class="product-name">{{this.title}}</span> 
+        <span class="product-price">${{this.price}}</span>
+      </li>
+    {{/each}}
+  </ul>
+</div>
+

@@ -1,16 +1,5 @@
 [
   {
-    "id": "w6jTz8AfInAg9cSqY5KcE",
-    "status": true,
-    "thumbnail": "",
-    "title": "Botines Adidas Predator",
-    "description": "Botines profesionales de fútbol",
-    "code": "adipred001",
-    "price": 200,
-    "stock": 20,
-    "category": "botines"
-  },
-  {
     "id": "H1rDnl46ipOeoC4ecHAEy",
     "status": true,
     "thumbnail": "",
@@ -20,5 +9,38 @@
     "price": 80,
     "stock": 25,
     "category": "camisetas"
+  },
+  {
+    "id": "52EaNftHotW-W45ChnH4O",
+    "status": true,
+    "thumbnail": "",
+    "title": "Camiseta River 2016",
+    "description": "Camiseta de River suplente 2016 ",
+    "code": "Riv_S_2016",
+    "price": "100",
+    "stock": "10",
+    "category": "Camiseta"
+  },
+  {
+    "id": "0VUJ1tFkXX4aC6ubf9zBA",
+    "status": true,
+    "thumbnail": "",
+    "title": "Camiseta River 2015",
+    "description": "Camiseta de River suplente 2015 ",
+    "code": "Riv_S_2015",
+    "price": "110",
+    "stock": "15",
+    "category": "Camiseta"
+  },
+  {
+    "id": "Tv_g2x9ESy68XwoWTk-1c",
+    "status": true,
+    "thumbnail": "",
+    "title": "Gorra Adidas",
+    "description": "Gorra Adidas Negra ",
+    "code": "G_Adidas_negra",
+    "price": "40",
+    "stock": "60",
+    "category": "Gorras"
   }
 ]

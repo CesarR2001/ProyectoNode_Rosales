@@ -1,0 +1,202 @@
+/* Contenedor principal */
+.container {
+    font-family: 'Arial', sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #212121; /* Fondo oscuro */
+    border-radius: 15px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+    color: #fff; /* Texto blanco para contraste */
+  }
+  
+  /* Título principal */
+  .main-title {
+    font-size: 36px;
+    font-weight: bold;
+    color: #00e676; /* Verde neón */
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+  }
+  
+  /* Título del formulario */
+  .form-title {
+    font-size: 24px;
+    color: #00b0ff; /* Azul eléctrico */
+    text-align: center;
+    margin-bottom: 15px;
+  }
+  
+  /* Estilos del formulario */
+  .product-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 30px;
+  }
+  
+  .product-form input {
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #444;
+    border-radius: 8px;
+    background-color: #333;
+    color: #fff;
+    transition: border-color 0.3s ease;
+  }
+  
+  .product-form input:focus {
+    border-color: #00e676; /* Verde neón para el enfoque */
+    outline: none;
+  }
+  
+  .submit-btn {
+    padding: 12px;
+    font-size: 18px;
+    background-color: #00e676;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submit-btn:hover {
+    background-color: #00b0ff; /* Azul eléctrico al hacer hover */
+  }
+  
+  /* Título de la lista de productos */
+  .product-list-title {
+    font-size: 24px;
+    color: #00b0ff; /* Azul eléctrico */
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Lista de productos */
+  .product-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .product-item {
+    background-color: #333; /* Fondo oscuro */
+    margin: 10px 0;
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .product-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
+  }
+  
+  .product-name, .product-price {
+    font-size: 18px;
+    color: #fff;
+  }
+  
+  .product-price {
+    color: #00e676; /* Verde neón */
+    font-weight: bold;
+  }
+  
+  .delete-btn {
+    padding: 8px 12px;
+    font-size: 14px;
+    background-color: #ff4e00; /* Naranja vibrante */
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .delete-btn:hover {
+    background-color: #ff7043; /* Naranja más suave al hacer hover */
+  }
+  
+  /* Estilos para pantallas pequeñas (móviles) */
+  @media (max-width: 768px) {
+    .container {
+      padding: 15px;
+    }
+  
+    .main-title {
+      font-size: 28px;
+    }
+  
+    .form-title {
+      font-size: 20px;
+    }
+  
+    .product-form input, .submit-btn {
+      font-size: 14px;
+    }
+  
+    .product-list-title {
+      font-size: 22px;
+    }
+  
+    .product-item {
+      padding: 15px;
+    }
+  
+    .product-name, .product-price {
+      font-size: 16px;
+    }
+  }
+  
+  /* Estilos para pantallas medianas (tabletas) */
+  @media (min-width: 768px) and (max-width: 1024px) {
+    .container {
+      padding: 20px;
+    }
+  
+    .product-form input, .submit-btn {
+      font-size: 16px;
+    }
+  
+    .product-item {
+      padding: 18px;
+    }
+  
+    .product-name, .product-price {
+      font-size: 17px;
+    }
+  }
+  
+  /* Estilos para pantallas grandes (escritorio) */
+  @media (min-width: 1024px) {
+    .container {
+      padding: 30px;
+    }
+  
+    .main-title {
+      font-size: 42px;
+    }
+  
+    .form-title {
+      font-size: 26px;
+    }
+  
+    .product-list-title {
+      font-size: 28px;
+    }
+  
+    .product-item {
+      padding: 25px;
+    }
+  
+    .product-name, .product-price {
+      font-size: 20px;
+    }
+  }
+  
