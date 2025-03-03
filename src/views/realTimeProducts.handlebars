@@ -15,7 +15,7 @@
 
   <h2 class="product-list-title">Lista de Productos</h2>
   <ul id="productsList" class="product-list">
-    {{#each products}}
+    {{#each products.docs}}
       <li class="product-item">
         <span class="product-name">{{this.title}}</span> - <span class="product-price">${{this.price}}</span> 
         <button class="delete-btn" data-id="{{this.id}}">Eliminar</button>

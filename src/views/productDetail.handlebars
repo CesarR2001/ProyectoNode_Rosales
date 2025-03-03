@@ -1,0 +1,9 @@
+<div class="product-detail-container">
+  <h1>{{product.title}}</h1>
+  <img src="{{product.thumbnail}}" alt="{{product.title}}" class="product-image" />
+  <p class="product-description">{{product.description}}</p>
+  <p class="product-price">Precio: ${{product.price}}</p>
+  <p class="product-stock">Stock: {{product.stock}}</p>
+  <p class="product-category">Categoría: {{product.category}}</p>
+  <p class="product-status">Estado: {{#if product.status}}Disponible{{else}}No disponible{{/if}}</p>
+</div>

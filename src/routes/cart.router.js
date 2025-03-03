@@ -1,55 +1,145 @@
 import express from "express";
 import CartManager from "../CartManager.js";
 
-//instanciamos el router de express para manejar las rutas
 const cartRouter = express.Router();
-//instanciamos el manejador de nuestro archivo de carrito
-const cartManager = new CartManager("./src/data/cart.json");
+const cartManager = new CartManager(); // Ahora funciona con MongoDB
 
-//POST "/"
-// Ruta para agregar un nuevo carrito
+// POST "/"
+// Crear un nuevo carrito
 cartRouter.post("/", async (req, res) => {
-    try {
-      const newCart = await cartManager.addCart(); // Llamamos al método addCart para agregar el carrito
-      res.status(201).send(newCart); // Respondemos con el carrito recién creado
-    } catch (error) {
-      res.status(500).send({ message: error.message }); // Si ocurre un error, lo respondemos con el mensaje
-    }
-    });
+  try {
+    const newCart = await cartManager.addCart();
+    res.status(201).json(newCart);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
-//GET "/"
-cartRouter.get("/", async(req, res)=> {
-    try {
-        const data = await cartManager.getCarts();
-        res.status(200).send(data);
-    } catch (error) {
-        res.status(500).send({ message: error.message })
-    }
-    })
+// GET "/"
+// Obtener todos los carritos
+cartRouter.get("/", async (req, res) => {
+  try {
+    const carts = await cartManager.getCarts();
+    res.status(200).json(carts);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
-//GET "/:cid"
-cartRouter.get("/:id", async(req, res)=> {
-    const {id}= req.params;
-    try {
-        const data = await cartManager.getCartById(id);
-        res.status(200).send(data);
-    } catch (error) {
-        res.status(500).send({ message: error.message })
-    }
-    })
+// GET "/:cid"
+// Obtener un carrito por ID
+cartRouter.get("/:cid", async (req, res) => {
+  try {
+    const cart = await cartManager.getCartById(req.params.cid);
+    res.status(200).json(cart);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+});
 
-//POST "/:cid/product/:pid"
+// POST "/:cid/products/:pid"
+// Agregar un producto a un carrito
 cartRouter.post("/:cid/products/:pid", async (req, res) => {
-    const { cid, pid } = req.params; // Obtenemos cartId (cid) y productId (pid) desde los parámetros de la URL
-    const { quantity } = req.body; // Obtenemos la cantidad desde el cuerpo de la solicitud
+  const { cid, pid } = req.params;
+  const { quantity = 1 } = req.body; // Si no se envía cantidad, por defecto es 1
 
-    try {
-      // Llamamos al método addProductInCartById para agregar el producto al carrito
-        const updatedCart = await cartManager.addProductInCartById(cid, pid, quantity);
-      res.status(200).send(updatedCart); // Respondemos con el carrito actualizado
-    } catch (error) {
-      res.status(500).send({ message: error.message }); // Si hay un error, respondemos con el mensaje
-    }
-    });
+  try {
+    const updatedCart = await cartManager.addProductInCartById(cid, pid, quantity);
+    res.status(200).json(updatedCart);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// DELETE "/api/carts/:cid/products/:pid" 
+// Eliminar un producto específico del carrito
+cartRouter.delete("/:cid/products/:pid", async (req, res) => {
+  const { cid, pid } = req.params;
+
+  try {
+    const updatedCart = await cartManager.removeProductFromCart(cid, pid);
+    res.status(200).json(updatedCart);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// PUT "/api/carts/:cid" 
+// Actualizar el carrito con un array de productos
+cartRouter.put("/:cid", async (req, res) => {
+  const { cid } = req.params;
+  const { products } = req.body; // Se espera un array de productos
+
+  try {
+    const updatedCart = await cartManager.updateCart(cid, products);
+    res.status(200).json(updatedCart);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// PUT "/api/carts/:cid/products/:pid"
+// Actualizar SOLO la cantidad de un producto específico en el carrito
+cartRouter.put("/:cid/products/:pid", async (req, res) => {
+  const { cid, pid } = req.params;
+  const { quantity } = req.body; // Nueva cantidad del producto
+
+  if (quantity <= 0) {
+    return res.status(400).json({ message: "La cantidad debe ser mayor a 0" });
+  }
+
+  try {
+    const updatedCart = await cartManager.updateProductQuantityInCart(cid, pid, quantity);
+    res.status(200).json(updatedCart);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// DELETE "/api/carts/:cid"
+// Vaciar el carrito (eliminando todos los productos) sin borrar el carrito
+cartRouter.delete("/:cid", async (req, res) => {
+  const { cid } = req.params;
+
+  try {
+    const emptyCart = await cartManager.emptyCart(cid);
+    res.status(200).json(emptyCart);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+
+// PUT "/api/carts/:cid/products/:pid"
+// Actualizar SOLO la cantidad de un producto específico en el carrito
+cartRouter.put("/:cid/products/:pid", async (req, res) => {
+  const { cid, pid } = req.params;
+  const { quantity } = req.body; // Nueva cantidad del producto
+
+  if (quantity <= 0) {
+    return res.status(400).json({ message: "La cantidad debe ser mayor a 0" });
+  }
+
+  try {
+    const updatedCart = await cartManager.updateProductQuantityInCart(cid, pid, quantity);
+    res.status(200).json(updatedCart);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// DELETE "/api/carts/:cid"
+// Vaciar el carrito (eliminando todos los productos) sin borrar el carrito
+cartRouter.delete("/:cid", async (req, res) => {
+  const { cid } = req.params;
+
+  try {
+    const emptyCart = await cartManager.emptyCart(cid);
+    res.status(200).json(emptyCart);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 
 export default cartRouter;

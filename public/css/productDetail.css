@@ -1,0 +1,87 @@
+/* Estilo para el fondo de toda la página */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #212121;
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Asegura que ocupe al menos toda la pantalla */
+  }
+  
+  /* Contenedor del detalle del producto */
+  .product-detail-container {
+    max-width: 800px;
+    width: 100%;
+    background-color: #1e1e1e;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.5);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  /* Título del producto */
+  .product-detail-container h1 {
+    font-size: 36px;
+    font-weight: bold;
+    color: #00e676; /* Verde neón */
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Imagen del producto */
+  .product-image {
+    max-width: 100%;
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
+  
+  /* Descripción del producto */
+  .product-description {
+    font-size: 18px;
+    text-align: justify;
+    margin-bottom: 20px;
+  }
+  
+  /* Precio del producto */
+  .product-price {
+    font-size: 22px;
+    font-weight: bold;
+    color: #00e676; /* Verde neón para resaltar el precio */
+    margin-bottom: 10px;
+  }
+  
+  /* Detalles adicionales: Stock, Categoría y Estado */
+  .product-stock,
+  .product-category,
+  .product-status {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  /* Estilos para dispositivos móviles */
+  @media (max-width: 768px) {
+    .product-detail-container {
+      padding: 15px;
+    }
+  
+    .product-detail-container h1 {
+      font-size: 28px;
+    }
+  
+    .product-description,
+    .product-stock,
+    .product-category,
+    .product-status {
+      font-size: 16px;
+    }
+  
+    .product-price {
+      font-size: 20px;
+    }
+  }
+  

@@ -6,10 +6,13 @@ import { Server } from "socket.io";
 import http from "http";
 import viewsRouter from "./routes/views.router.js";
 import ProductManager from "./ProductManager.js";
+import CartManager from "./CartManager.js";
+import connectMongoDB from "./db/db.js"
 
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
+connectMongoDB();
 
 //handlebars
 app.engine("handlebars", engine());
@@ -32,7 +35,7 @@ app.use("/", viewsRouter);
 const productManager = new ProductManager("./src/data/products.json");
 io.on("connection", (socket)=> {
   console.log("Nuevo usuario conectado");
-
+  
   socket.on("newProduct", async(productData)=> {
     try {
       const newProduct = await productManager.addProduct(productData);

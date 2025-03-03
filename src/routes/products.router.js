@@ -1,71 +1,55 @@
 import express from "express";
 import ProductManager from "../ProductManager.js";
 
-
-//instanciamos el router de express para manejar las rutas
 const productsRouter = express.Router();
-//instanciamos el manejador de nuestro archivo de productos
-const productManager = new ProductManager("./src/data/products.json");
+const productManager = new ProductManager();
 
-//GET "/"
-productsRouter.get("/", async(req, res)=> {
+// Obtener todos los productos
+productsRouter.get("/", async (req, res) => {
   try {
-    const data = await productManager.getProducts();
-    res.status(200).send(data);
-  } catch (error) {
-    res.status(500).send({ message: error.message })
-  }
-})
-
-//GET "/:pid"
-productsRouter.get("/:id", async(req, res)=> {
-  const {id} = req.params;
-  try {
-    const product = await productManager.getProductById(id);
-    res.status(200).send(product);
+    const products = await productManager.getProducts();
+    res.status(200).send(products);
   } catch (error) {
     res.status(500).send({ message: error.message });
   }
-})
+});
 
 
-//POST "/"
-productsRouter.post("/", async(req, res)=> {
-  const newProduct = req.body
+// Obtener un producto por ID
+productsRouter.get("/:id", async (req, res) => {
   try {
-    const aggProduct = await productManager.addProduct(newProduct);
-    res.status(201).send(aggProduct)
+    const product = await productManager.getProductById(req.params.id);
+    res.status(200).send(product);
   } catch (error) {
-    res.status(500).send({ message: error.message })
+    res.status(404).send({ message: error.message });
   }
-})
+});
 
-
-//PUT "/:pid"
-productsRouter.put("/:id", async (req, res) => {
-  const { id } = req.params;
-  const updatedFields = req.body;
-
+// Agregar un nuevo producto
+productsRouter.post("/", async (req, res) => {
   try {
-    const updatedProduct = await productManager.updateProductById(id, updatedFields);
+    const newProduct = await productManager.addProduct(req.body);
+    res.status(201).send(newProduct);
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+});
+
+// Actualizar un producto por ID
+productsRouter.put("/:id", async (req, res) => {
+  try {
+    const updatedProduct = await productManager.updateProductById(req.params.id, req.body);
     res.status(200).send(updatedProduct);
   } catch (error) {
     res.status(404).send({ message: error.message });
   }
 });
 
-
-
-//DELETE "/:pid"
+// Eliminar un producto por ID
 productsRouter.delete("/:id", async (req, res) => {
-  const { id } = req.params;
-
   try {
-    const deletedProduct = await productManager.deleteProductById(id);
-    res.status(200).send({
-      message: "Producto eliminado con éxito",
-      deletedProduct,
-    });
+    const deletedProduct = await productManager.deleteProductById(req.params.id);
+    res.status(200).send({ message: "Producto eliminado", deletedProduct });
   } catch (error) {
     res.status(404).send({ message: error.message });
   }

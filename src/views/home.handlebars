@@ -2,12 +2,102 @@
   <h1 class="store-title">Tienda Deportiva</h1>
   <h2 class="product-list-title">Lista de Productos</h2>
   <ul class="product-list">
-    {{#each products}}
+    {{#each products.docs}}
       <li class="product-item">
         <span class="product-name">{{this.title}}</span> 
         <span class="product-price">${{this.price}}</span>
+        
+        <!-- Botón para agregar al carrito -->
+        <button class="add-to-cart-btn" data-product-id="{{this._id}}">Agregar al carrito</button>
       </li>
     {{/each}}
+
+    <p> Página {{products.page}} de {{products.totalPages}}</p>
+
+    {{#if products.hasPrevPage}}
+      <a href="/?page={{products.prevPage}}">Anterior</a>
+    {{/if}}
+    
+    {{#if products.hasNextPage}}
+      <a href="/?page={{products.nextPage}}">Siguiente</a>
+    {{/if}}
+
   </ul>
 </div>
 
+<script>
+  // Verificar si el carrito ya está creado en la sesión o en el almacenamiento local
+  let cartId = localStorage.getItem('cartId'); // Recuperar el ID del carrito desde LocalStorage
+
+  // Si no existe un carrito, crear uno (esto se puede modificar si tienes un sistema de sesiones)
+  if (!cartId) {
+    fetch('/api/carts', { method: 'POST' })
+      .then(response => response.json())
+      .then(data => {
+        cartId = data._id; // Obtener el ID del nuevo carrito
+        localStorage.setItem('cartId', cartId); // Guardar el ID del carrito en LocalStorage
+      })
+      .catch(error => console.error('Error al crear el carrito:', error));
+  }
+
+  // Cuando se haga clic en un botón "Agregar al carrito"
+  const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+
+  addToCartButtons.forEach(button => {
+    button.addEventListener('click', async (event) => {
+      const productId = event.target.getAttribute('data-product-id'); // Obtiene el ID del producto
+      if (!cartId) {
+        Swal.fire({
+          icon: 'error',
+          title: '¡Error!',
+          text: 'No se pudo encontrar el carrito, por favor intente nuevamente.',
+          showConfirmButton: false,
+          timer: 1500 // Desaparece después de 1.5 segundos
+        });
+        return;
+      }
+
+      // Realiza una solicitud para agregar el producto al carrito
+      try {
+        const response = await fetch(`/api/carts/${cartId}/products/${productId}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ quantity: 1 }) // En este caso, la cantidad es 1 por defecto
+        });
+
+        const result = await response.json();
+        if (response.ok) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Producto agregado',
+            text: 'El producto ha sido agregado a tu carrito.',
+            showConfirmButton: false,
+            timer: 1500 // Desaparece después de 1.5 segundos
+          });
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: result.message,
+            showConfirmButton: false,
+            timer: 1500
+          });
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Error al agregar el producto al carrito',
+          showConfirmButton: false,
+          timer: 1500
+        });
+      }
+    });
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/js/index.js"></script>

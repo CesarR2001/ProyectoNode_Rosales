@@ -1,0 +1,43 @@
+<!-- cartDetail.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrito de Compras</title>
+  <link rel="stylesheet" href="/styles/<%= style %>">
+</head>
+<body>
+  <h1>Carrito de Compras</h1>
+
+  <% if (cart.products.length === 0) { %>
+    <p>No hay productos en el carrito.</p>
+  <% } else { %>
+    <table>
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th>Cantidad</th>
+          <th>Precio Unitario</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% cart.products.forEach(item => { %>
+          <tr>
+            <td><%= item.product.name %></td>
+            <td><%= item.quantity %></td>
+            <td><%= item.product.price %></td>
+            <td><%= item.quantity * item.product.price %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+
+    <h3>Total: $<%= total %></h3>
+
+    <button onclick="window.location.href='/checkout/<%= cart._id %>'">Proceder al pago</button>
+  <% } %>
+
+</body>
+</html>
